@@ -1,0 +1,41 @@
+﻿@model HospitalManagement.Models.User
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = null;
+}
+<html>
+<head>
+    <link href="~/css/loginpage.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <h1>Login</h1>
+            </div>
+
+            <!-- Login Form -->
+            <form>
+                @Html.TextBoxFor(a => a.Username, new { @class = "fadeIn second", @placeholder = "Username" })
+                @Html.TextBoxFor(a => a.Password, new { @class = "fadeIn second", @placeholder = "Password" })
+                <input type="button" id="btn_success" class="fadeIn fourth" value="Log In">
+            </form>
+
+            <!-- Remind Passowrd -->
+            <div id="formFooter">
+                <a class="underlineHover" href="@Url.Action("AddUserView","HospitalManagement")"><h1>Sign Up</h1></a>
+            </div>
+
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script>
+        $("#btn_success").click(function () {
+            window.location.href = "@Url.Action("Home","HospitalManagement")";
+        })
+    </script>
+</body>
+</html>

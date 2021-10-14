@@ -1,0 +1,27 @@
+﻿/* Theme */
+$primaryColor: #7ac0da; //light blue
+$alternateColor: #777; //gray
+$accentColor: #000; //white
+$foreColor: #000; //white
+
+button {
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    width: 250px;
+    background-color: $primaryColor;
+    border: 1px solid $accentColor;
+    text-align: center;
+}
+
+div {
+    background-color: $primaryColor;
+    color: $foreColor;
+    border: 1px solid $accentColor;
+    padding: 20px;
+
+    button {
+        background-color: $alternateColor;
+    }
+}

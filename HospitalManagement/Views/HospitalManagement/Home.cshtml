@@ -1,0 +1,158 @@
+﻿@model HospitalManagement.Models.HospitalMgmtViewModel
+@{
+    ViewData["Title"] = "Summary";  
+ }
+<html>
+<head>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="my-auto mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div id="div_male">
+                                                <h4>Doctors Count</h4>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div id="div_doctor_count" class="text-primary">
+                                                <h1>@Model.Count.DoctorsCount</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div id="div_female">
+                                                <h4>Hospitals Count</h4>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div id="div_hospital_count" class="text-success">
+                                                <h1>@Model.Count.HospitalsCount</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div id="div_female">
+                                                <h4>Patients Count</h4>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div id="div_patient_count" class="text-success">
+                                                <h1>@Model.Count.PatientsCount</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div id="">
+                                                <h5>Top 10 Doctor List</h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="card-body">
+                                                <div id="div_doctor_list" class="text-warning">
+                                                    @foreach (var item in @Model.DoctorsList)
+                                                    {
+                                                        <div>
+                                                            @item.ToString()
+                                                            <hr />
+                                                        </div>
+                                                    }                                                  
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div id="">
+                                                <h5>Top 10 Hospital List</h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="card-body">
+                                                <div id="div_hospital_list" class="text-warning">
+                                                    @foreach (var item in @Model.HospitalsList)
+                                                    {
+                                                        <div>
+                                                            @item.ToString()
+                                                            <hr />
+                                                        </div>
+                                                    }                                                  
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div id="">
+                                                <h5>Top 10 Patients List</h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="card-body">
+                                                <div id="div_patient_list" class="text-warning">
+                                                    @foreach (var item in @Model.PatientsList)
+                                                    {
+                                                        <div>
+                                                            @item.ToString()
+                                                            <hr />
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+    @section scripts {
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    }

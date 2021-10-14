@@ -1,0 +1,12 @@
+/* Creating Table */
+
+CREATE TABLE HospitalMgmt.tblAppointments(ID INT IDENTITY(1,1) PRIMARY KEY
+,PatientName VARCHAR(150) NOT NULL
+,Phone VARCHAR(13) UNIQUE NOT NULL
+,Email VARCHAR(200) UNIQUE NOT NULL
+,CityID INT NOT NULL
+,HospitalID INT NOT NULL
+,DoctorID INT NOT NULL
+,DateOfAppointment DATETIME
+,HealthQueries VARCHAR(500)
+,IsActive BIT DEFAULT 1)

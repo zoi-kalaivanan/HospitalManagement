@@ -1,0 +1,110 @@
+﻿@model HospitalManagement.Models.User
+@{
+    ViewData["Title"] = "Signup";
+    Layout = null;
+}
+<html>
+<head>
+    <link href="~/css/Login.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <form class="form-horizontal" role="form">
+            <h2>Registration</h2>
+            <div class="form-group">
+                @Html.DisplayNameFor(m=>m.Username)<span class="text-danger">*</span>
+                <div class="col-sm-9">
+                    <input asp-for="Username" class="form-control" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label><span class="text-danger">*</span>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label><span class="text-danger">*</span>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label><span class="text-danger">*</span>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label"></label><span class="text-danger">*</span>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <input type="button" id="btn_add" value="Create" class="btn btn-primary" />
+            <a asp-action="Index">Login</a>
+        </form>
+        <div id="div_toaster" class="row justify-content-center toast">
+            <div id="toaster_card" class="card">
+                <div class="container">
+
+
+                </div>
+            </div>
+        </div>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $("#btn_add").click(function () {
+                    var Data = $(".form-horizontal").serializeArray();
+                    var Json = {};
+                    $.each(Data, function (index, item) {
+                        if (this.value != undefined) {
+                            Json[this.name] = this.value;
+                        }
+                    })
+                    $.ajax({
+                        type: "GET",
+                        url: "@Url.Action("AddUpdate","HospitalManagement")",
+                        data: Json,
+                        success: function (response) {                  
+                            if (response.status == "S") {
+                                $("#toaster_card").removeClass("failed-shadow success-shadow");
+                                $("#toaster_card .container").empty();
+                                $("#toaster_card").addClass("success-shadow");
+                                $("#toaster_card .container").append('<h2><b>Success</b></h2><p>' + response.message + '</p>');
+                                $("#div_toaster").removeClass("toast");
+                                setTimeout(function () {
+                                    $("#toaster_card .container").empty();
+                                    $("#div_toaster").addClass("toast");
+                                     window.location.href = "@Url.Action("Index","HospitalManagement")";
+                                }, 15000)
+                            } else {
+                                $("#toaster_card").removeClass("failed-shadow success-shadow");
+                                $("#toaster_card .container").empty();
+                                $("#toaster_card").addClass("failed-shadow");
+                                $("#toaster_card .container").append('<h2><b>Failed</b></h2><p>' + response.message + '</p>');
+                                $("#div_toaster").removeClass("toast");
+                                setTimeout(function () {
+                                    $("#toaster_card .container").empty();
+                                    $("#div_toaster").addClass("toast");
+                                }, 5000)
+                            }
+                        },
+                        error: function (err) {
+                            $("#toaster_card").removeClass("failed-shadow success-shadow");
+                            $("#toaster_card .container").empty();
+                            $("#toaster_card").addClass("failed-shadow");
+                            $("#toaster_card .container").append('<h2><b>Failed</b></h2><p>' + err + '</p>');
+                            $("#div_toaster").removeClass("toast");
+                            setTimeout(function () {
+                                $("#toaster_card .container").empty();
+                                $("#div_toaster").addClass("toast");
+                            }, 5000)
+                        }
+                    })
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>
+

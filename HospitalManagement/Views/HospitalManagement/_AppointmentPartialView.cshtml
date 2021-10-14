@@ -1,0 +1,167 @@
+﻿@model Appointment
+@{
+    ViewData["Title"] = "Doctor Appointment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="container">
+    <form id="form_appointment" class="form-horizontal" role="form">
+        <h2>Registration Form</h2>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name,"Name")
+            @*<label for="firstName" ">Full Name</label>*@
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @id = "txt_name", @placeholder = "Name" })
+                @Html.ValidationMessageFor(m => m.Name)
+                @*<input type="text" id="firstName" placeholder="Full Name" class="form-control" autofocus>
+                <span class="help-block">Last Name, First Name, eg.: Smith, Harry</span>*@
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email,"Email")
+            @*<label for="email" class="col-sm-3 control-label">Email</label>*@
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "txt_name", @placeholder = "Email" })
+                @Html.ValidationMessageFor(m => m.Email)
+                @*<input type="email" id="email" placeholder="Email" class="form-control">*@
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Phone,"Phone")
+            @*<label for="password" class="col-sm-3 control-label">Password</label>*@
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @id = "txt_phone", @placeholder = "Enter Your Phone Number" })
+                @Html.ValidationMessageFor(m => m.Phone)
+                @*<input type="password" id="password" placeholder="Password" class="form-control">*@
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.CityID,"City")
+            @*<label for="birthDate" class="col-sm-3 control-label">Date of Birth</label>*@
+            <div class="col-sm-9">
+                @Html.DropDownListFor(m => m.CityID, new List<SelectListItem>() { },"-- Select--", new { @id = "ddl_city", @class = "form-control" })
+                @*<input type="date" id="birthDate" class="form-control">*@
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.HospitalID,"Hospital")
+            @*<label for="country" class="col-sm-3 control-label">Country</label>*@
+            <div class="col-sm-9">
+                @Html.DropDownListFor(m => m.HospitalID, new List<SelectListItem>() { },"-- Select--", new { @id = "ddl_hospital", @class = "form-control" })
+            </div>
+        </div> <!-- /.form-group -->
+        <div class="form-group">
+            @Html.LabelFor(m => m.DoctorID,"Doctor")
+            @*<label class="control-label col-sm-3">Gender</label>*@
+            <div class="col-sm-9">
+                @Html.DropDownListFor(m => m.DoctorID, new List<SelectListItem>() { }, "-- Select--", new { @id = "ddl_doctor", @class = "form-control" })
+            </div>
+        </div> <!-- /.form-group -->
+        <div class="form-group">
+            @Html.LabelFor(m => m.DateOfAppointment,"Date Of Appointment")
+            @*<label class="control-label col-sm-3">Meal Preference</label>*@
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.DateOfAppointment, new { @class = "form-control", @id = "txt_data_of_appointment", @type = "Date" })
+                @Html.ValidationMessageFor(m => m.DateOfAppointment)
+            </div>
+        </div> <!-- /.form-group -->
+        <div class="form-group">
+            @Html.LabelFor(m => m.HealthQueries, "HealthQueries")
+            @*<label class="control-label col-sm-3">Meal Preference</label>*@
+            <div class="col-sm-9">
+                @Html.TextAreaFor(m => m.HealthQueries, new { @class = "form-control", @id = "txt_health_queries", @type = "Date" })
+                @Html.ValidationMessageFor(m => m.HealthQueries)
+            </div>
+        </div> <!-- /.form-group -->
+        <div class="form-group">
+            <div class="col-sm-9 col-sm-offset-3">
+                <input type="button" class="btn btn-primary btn-block" id="btn_appoint" value="Register" />
+            </div>
+        </div>
+    </form> <!-- /form -->
+</div> <!-- ./container -->
+
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {          
+            fnFetchDropdownValues(1);
+            $("#ddl_city").change(function () {              
+                var CityID = $("#ddl_city").val();
+                fnFetchDropdownValues(2, CityID);
+            })
+            $("#ddl_hospital").change(function () {
+                var CityID = $("#ddl_city").val();
+                var HospitalID = $("#ddl_hospital").val();
+                fnFetchDropdownValues(3, CityID, HospitalID);
+            })
+
+            $(document).on("click", "#btn_appoint", function () {
+                debugger;
+                var Data = $("#form_appointment").serializeArray();
+                var json = {};
+                $.each(Data, function (index, item) {
+                    json[this.name] = this.value
+                })
+                $.ajax({
+                    url: "@Url.Action("AddUpdateAppointment", "HospitalManagement")",
+                    type: "GET",
+                    data: { json: JSON.stringify(json) },
+                    success: function () {
+
+                    },
+                    error: function () {
+
+                    }
+
+                })
+            })
+        })
+
+        function fnFetchDropdownValues(flag,CityID,HospitalID)
+        {          
+            var json ={};
+            json["Flag"] = flag == (null || undefined) ? 0 : flag;
+            json["CityID"] = CityID == (null || undefined) ? 0 : CityID;
+            json["HospitalID"] = HospitalID == (null || undefined) ? 0 : HospitalID;
+            $.ajax({              
+                url: "@Url.Action("GetDropdownDetails","HospitalManagement")",
+                type: "GET",
+                data: { json: JSON.stringify(json)},
+                success: function (response) {
+                    if (response.status == "S") {                       
+                        if (flag == 1) {
+                         /*   $("#ddl_city").next().nextAll().empty();  */
+                            $('#ddl_city option:not(:first)').remove();
+                            for (var i = 0; i < response.data.length; i++) {
+                                var opt = new Option(response.data[i].text, response.data[i].value);
+                                $("#ddl_city").append(opt);
+                            }
+                        } else if (flag == 2) {
+                            $('#ddl_hospital option:not(:first)').remove();
+                          /*  $("#ddl_hospital").next().nextAll().empty();*/
+                            for (var i = 0; i < response.data.length; i++) {
+                                var opt = new Option(response.data[i].text, response.data[i].value);
+                                $("#ddl_hospital").append(opt);
+                            }
+                        } else if (flag == 3) {
+                            $('#ddl_doctor option:not(:first)').remove();
+                        /*    $("#ddl_doctor").next().nextAll().empty();*/
+                            for (var i = 0; i < response.data.length; i++) {
+                                var opt = new Option(response.data[i].text, response.data[i].value);
+                                $("#ddl_doctor").append(opt);
+                            }
+                        }
+                    } else {
+
+                    }
+                },
+                error: function () {
+
+                }
+                  
+             })
+        }
+    </script>
+
+ }

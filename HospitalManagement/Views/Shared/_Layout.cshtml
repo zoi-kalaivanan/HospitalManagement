@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HospitalManagement</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+</head>   
+    <body class="home">
+        <div id="viewport">
+            <!-- Sidebar -->
+            <div id="sidebar">
+                <header>
+                    <a href="#">My App</a>
+                </header>
+                <a class="active" href="#home">Home</a><br>
+                <a href="@Url.Action("_AppointmentPartialView","HospitalManagement")">Appointment</a><br>
+                <a href="@Url.Action("SearchDoctor","HospitalManagement")">Search Doctor</a><br>
+                <a href="#about">About</a><br>
+            </div>
+            <!-- Content -->
+            <!--Container Main start-->
+            <div class="height-100 bg-light">
+                <div class="container">
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
+                </div>
+            </div>
+        </div>
+  
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/jquery.dataTables.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+    </body>
+</html>
